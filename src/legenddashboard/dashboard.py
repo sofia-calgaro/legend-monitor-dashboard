@@ -66,6 +66,7 @@ def build_dashboard(
         base_path=data_path,
         name="L200 Monitoring",
     )
+    
     ged_monitor = GedMonitoring(
         base_path=cal_path,
         run_dict=base_monitor.param.run_dict,
@@ -98,37 +99,27 @@ def build_dashboard(
         # cal
         for pane in cal_panes.values():
             l200_monitoring.main.append(pane)
+
     if "phy" not in disable_page:
-        if "cal" not in disable_page:
-            phy_monitor = PhyMonitoring(
-                base_path=cal_path,
-                phy_path=phy_path,
-                run_dict=base_monitor.param.run_dict,
-                periods=base_monitor.param.periods,
-                period=base_monitor.param.period,
-                run=base_monitor.param.run,
-                date_range=base_monitor.param.date_range,
-                channel=ged_monitor.param.channel,
-                string=ged_monitor.param.string,
-                sort_by=ged_monitor.param.sort_by,
-                name="L200 Phy Monitoring",
-            )
-        else:
-            phy_monitor = PhyMonitoring(
-                phy_path=phy_path,
-                base_path=cal_path,
-                run_dict=base_monitor.param.run_dict,
-                periods=base_monitor.param.periods,
-                period=base_monitor.param.period,
-                run=base_monitor.param.run,
-                date_range=base_monitor.param.date_range,
-                name="L200 Phy Monitoring",
-            )
-        l200_monitoring.main.append(
-            phy_monitor.build_phy_pane(
-                widget_widths=widget_widths,
-            )
+        phy_monitor = PhyMonitoring(
+            phy_path=phy_path,
+            base_path=cal_path,
+            run_dict=base_monitor.param.run_dict,
+            periods=base_monitor.param.periods,
+            period=base_monitor.param.period,
+            run=base_monitor.param.run,
+            date_range=base_monitor.param.date_range,
+            channel=ged_monitor.param.channel, 
+            string=ged_monitor.param.string,
+            sort_by=ged_monitor.param.sort_by,
+            name="L200 Phy Monitoring",
         )
+        phy_panes = phy_monitor.build_phy_panes(
+            widget_widths=widget_widths,
+        )
+        for pane in phy_panes.values():
+            l200_monitoring.main.append(pane)
+
     if "spm" not in disable_page:
         sipm_monitor = SiPMMonitoring(
             sipm_path=sipm_path,

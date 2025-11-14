@@ -27,7 +27,6 @@ phy_plots_vals_dict = {
     "Cal. Gain": "TrapemaxCtcCal",
     "Gain to Pulser Ratio": "Trapemax_pulser01anaRatio",
     "Gain to Pulser Diff.": "Trapemax_pulser01anaDiff",
-    "Rate": "EventRate",
     "PSD Classifier": "AoeCustom",
 }
 phy_unit_vals = ["Relative", "Absolute"]
@@ -129,7 +128,7 @@ def phy_plot_vsTime(
     p.hover.renderers = hover_renderers
     p.hover.tooltips = [
         ("Time", "$x{%F %H:%M:%S CET}"),
-        (f"Avg. {plot_info.loc['label'].iloc[0]} ({plot_info.loc['unit'].iloc[0]})", f"@{time_series_col}{{0.2f}}"),
+        (f"Avg. {plot_info['label']} ({plot_info['unit']})", f"@{time_series_col}{{0.2f}}"),
         ("Detector", "$name"),
     ]
     p.hover.formatters = {"$x": "datetime", "$source": "printf"}
@@ -148,13 +147,13 @@ def phy_plot_vsTime(
     start_time_str = pd.to_datetime(data_for_start_time['datetime'].iloc[0]).strftime('%d/%m/%Y %H:%M:%S')
     p.xaxis.axis_label = f"Time (CET), starting: {start_time_str}"
     p.xaxis.axis_label_text_font_size = "20px"
-    p.yaxis.axis_label = f"{plot_info.loc['label'].iloc[0]} [{plot_info.loc['unit'].iloc[0]}]"
+    p.yaxis.axis_label = f"{plot_info['label']} [{plot_info['unit']}]"
     p.yaxis.axis_label_text_font_size = "20px"
     p.xaxis.formatter = DatetimeTickFormatter(days="%Y/%m/%d")
 
     # y-range for % unit plots
-    label = plot_info.loc["label"].iloc[0]
-    unit = plot_info.loc["unit"].iloc[0]
+    label = plot_info["label"]
+    unit = plot_info["unit"]
     if unit == "%":
         if label == "Noise":
             p.y_range = Range1d(-150, 150)
@@ -242,12 +241,12 @@ def phy_plot_histogram(
         output_backend="webgl",
         active_scroll="ywheel_zoom",
     )
-    p.title.text = f"{run_dict['experiment']}-{period}-{run} | Phy. {plot_type} | {plot_info.loc['label'].iloc[0]} | {string}"
+    p.title.text = f"{run_dict['experiment']}-{period}-{run} | Phy. {plot_type} | {plot_info['label']} | {string}"
     p.title.align = "center"
     p.title.text_font_size = "25px"
     p.hover.formatters = {"$x": "printf", "$snap_y": "printf"}
     p.hover.tooltips = [
-        (f"{plot_info.loc['label'].iloc[0]} ({plot_info.loc['unit'].iloc[0]}", "$x{%0.2f}"),
+        (f"{plot_info['label']} ({plot_info['unit']}", "$x{%0.2f}"),
         ("Counts", "$snap_y"),
         ("Detector", "$name"),
     ]

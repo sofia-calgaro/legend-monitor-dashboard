@@ -6,7 +6,6 @@ from legenddashboard.geds.phy.phy_plots import (
     phy_plots_sc_vals_dict,
     phy_plots_types_dict,
     phy_plots_vals_dict,
-    phy_resampled_vals,
     phy_unit_vals,
 )
 
@@ -16,7 +15,6 @@ __all__ = [
     "phy_plots_sc_vals_dict",
     "phy_plots_types_dict",
     "phy_plots_vals_dict",
-    "phy_resampled_vals",
     "phy_unit_vals",
 ]
 
